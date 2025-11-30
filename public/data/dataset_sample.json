@@ -1,0 +1,54 @@
+{
+  "name": "Ballistic Missiles Dataset (custom)",
+  "source": "https://example.com/ballistics-dataset",
+  "total_images": 2847,
+  "classes": ["Scud-B", "Patriot", "Tomahawk", "ICBM-R36", "Minuteman-III", "DF-21"],
+  "resolution_distribution": {
+    "low (< 512px)": 342,
+    "medium (512-1024px)": 1823,
+    "high (> 1024px)": 682
+  },
+  "split": {
+    "train": 70,
+    "validation": 15,
+    "test": 15
+  },
+  "samples": [
+    {
+      "id": 1,
+      "filename": "scud_001.jpg",
+      "label": "Scud-B",
+      "split": "train"
+    },
+    {
+      "id": 2,
+      "filename": "patriot_045.jpg",
+      "label": "Patriot",
+      "split": "train"
+    },
+    {
+      "id": 3,
+      "filename": "tomahawk_112.jpg",
+      "label": "Tomahawk",
+      "split": "validation"
+    },
+    {
+      "id": 4,
+      "filename": "icbm_r36_089.jpg",
+      "label": "ICBM-R36",
+      "split": "test"
+    },
+    {
+      "id": 5,
+      "filename": "minuteman_034.jpg",
+      "label": "Minuteman-III",
+      "split": "train"
+    },
+    {
+      "id": 6,
+      "filename": "df21_067.jpg",
+      "label": "DF-21",
+      "split": "validation"
+    }
+  ]
+}
