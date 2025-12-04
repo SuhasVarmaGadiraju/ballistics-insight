@@ -35,5 +35,12 @@ export const mockPredict = async (file: File): Promise<PredictionResult> => {
     description: descriptions[randomIndex],
     model: "resnet50-finetuned",
     inference_time_ms: Math.floor(35 + Math.random() * 30), // 35-65ms
+    metrics: {
+      accuracy: 0.923,
+      precision: 0.901,
+      recall: 0.887,
+      f1_score: 0.894,
+      support: 750,
+    },
   };
 };
