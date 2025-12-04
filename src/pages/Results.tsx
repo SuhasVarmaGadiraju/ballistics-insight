@@ -3,11 +3,21 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Upload, Clock, Cpu, AlertTriangle, CheckCircle } from "lucide-react";
+import { BarChart3, Upload, Clock, Cpu, AlertTriangle, CheckCircle, Activity } from "lucide-react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { PredictionResult } from "@/types/prediction";
+import { PredictionResult, Metrics } from "@/types/prediction";
+
+const formatMetric = (value: number | undefined): string => {
+  if (value === undefined || value === null || isNaN(value)) return "–";
+  return `${(value * 100).toFixed(1)}%`;
+};
+
+const formatSupport = (value: number | undefined): string => {
+  if (value === undefined || value === null || isNaN(value)) return "–";
+  return value.toLocaleString();
+};
 
 const Results = () => {
   const [result, setResult] = useState<PredictionResult | null>(null);
@@ -181,6 +191,51 @@ const Results = () => {
         >
           <Card>
             <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Activity className="w-5 h-5 text-primary" />
+                Model Metrics
+              </CardTitle>
+              <CardDescription>Overall model performance on test set</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {result.metrics ? (
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  <div className="bg-muted/50 rounded-lg p-4 text-center border border-border">
+                    <p className="text-sm text-muted-foreground mb-1">Accuracy</p>
+                    <p className="text-2xl font-bold text-foreground">{formatMetric(result.metrics.accuracy)}</p>
+                  </div>
+                  <div className="bg-muted/50 rounded-lg p-4 text-center border border-border">
+                    <p className="text-sm text-muted-foreground mb-1">Precision</p>
+                    <p className="text-2xl font-bold text-foreground">{formatMetric(result.metrics.precision)}</p>
+                  </div>
+                  <div className="bg-muted/50 rounded-lg p-4 text-center border border-border">
+                    <p className="text-sm text-muted-foreground mb-1">Recall</p>
+                    <p className="text-2xl font-bold text-foreground">{formatMetric(result.metrics.recall)}</p>
+                  </div>
+                  <div className="bg-muted/50 rounded-lg p-4 text-center border border-border">
+                    <p className="text-sm text-muted-foreground mb-1">F1-Score</p>
+                    <p className="text-2xl font-bold text-foreground">{formatMetric(result.metrics.f1_score)}</p>
+                  </div>
+                  <div className="bg-muted/50 rounded-lg p-4 text-center border border-border">
+                    <p className="text-sm text-muted-foreground mb-1">Support</p>
+                    <p className="text-2xl font-bold text-foreground">{formatSupport(result.metrics.support)}</p>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-muted-foreground text-center py-4">Metrics not available</p>
+              )}
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-8"
+        >
+          <Card>
+            <CardHeader>
               <CardTitle>Related Dataset Images</CardTitle>
               <CardDescription>Other examples of {result.label} from the training dataset</CardDescription>
             </CardHeader>
@@ -191,7 +246,7 @@ const Results = () => {
                     key={img.id}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 + index * 0.1 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
                     className="aspect-square bg-muted rounded-lg flex items-center justify-center border border-border"
                   >
                     <div className="text-center p-4">

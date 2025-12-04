@@ -1,3 +1,11 @@
+export interface Metrics {
+  accuracy?: number;
+  precision?: number;
+  recall?: number;
+  f1_score?: number;
+  support?: number;
+}
+
 export interface PredictionResult {
   label: string;
   confidence: number;
@@ -6,6 +14,7 @@ export interface PredictionResult {
   model: string;
   inference_time_ms: number;
   image?: string;
+  metrics?: Metrics;
 }
 
 export interface DatasetInfo {
